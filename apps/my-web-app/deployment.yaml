@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-web-app
+  name: my-web-app
+  namespace: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-web-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: my-web-app
+    spec:
+      containers:
+      - image: sdwnc/my-web-app:0.1
+        name: my-web-app
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
