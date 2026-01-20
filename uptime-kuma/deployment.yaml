@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: uptime-kuma
+  name: uptime-kuma
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+    spec:
+      containers:
+      - image: louislam/uptime-kuma:2
+        name: uptime-kuma
+        ports:
+        - containerPort: 3001
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+      volumes:
+       - name: data
+         persistentVolumeClaim:
+           claimName: kuma-pvc
+      nodeSelector:
+       kubernetes.io/hostname: k8s-worker
